@@ -1,0 +1,17 @@
+
+#!/bin/bash
+# Script para #autoxrandr create by morgan_greywolf
+# Use: add i3/.config exec --no-startup-id autoxrandr
+# Save: call this script "autoxrandr" and it's placed in my $HOME/bin directory.
+
+for output in $(xrandr | grep '\Wconnected' | awk '{ print $1 }'); do
+    if [[ $output =~ ^LVDS.*$ ]]; then
+            lvds=$output
+    fi
+done
+for output in $(xrandr | grep '\Wconnected' | awk '{ print $1 }'); do
+    if [[ ! $output =~ ^LVDS.*$ ]]; then
+       xrandr --output $lvds --auto --output $output --pos 0x0 --auto \
+              --right-of $lvds --primary
+    fi
+done
