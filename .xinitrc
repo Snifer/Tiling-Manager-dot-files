@@ -45,11 +45,5 @@ sed 's/_user_/'$(whoami)'/' ~/.config/obmenu-generator/config.pl -i
 
 ## Set a single desktop environment
 exec i3 #i3 environmnet
-#exec openbox-session #OpenBox environment
-#exec xfce4-session
-#exec gnome-session
-#exec startkde
-#exec cinnamon-session
-#exec razor-session
-#exec lxsession
-#exec mate-session
+
+
