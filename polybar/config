@@ -27,11 +27,12 @@ primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
 
-[bar/top]
-bottom = false
-monitor = eDP-1-1
+[bar/example]
+;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 27
+;offset-x = 1%
+;offset-y = 1%
 radius = 6.0
 fixed-center = false
 
@@ -55,11 +56,9 @@ font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 = siji:pixelsize=10;1
 font-3 = Hack Nerd Font Mono:pixelsize=14;2
 
-modules-left = bspwm memory filesystem mpd
+modules-left = bspwm memory filesystem mpd cpu
 modules-center = calendar xwindow pulseaudio 
-modules-right =  file-progres pub-ip network ethernet wlan0  vpn battery backlight
-#kdeconnect
-#networkspeeddown networkspeedup 
+modules-right =  pub-ip network ethernet wlan0  vpn battery backlight
 
 tray-position = right
 tray-padding = 1
@@ -79,70 +78,33 @@ tray-padding = 1
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-[bar/top_external]
-bottom = false
-monitor = HDMI-0
-width = 100%
-height = 27
-radius = 6.0
-fixed-center = false
-
-background = ${colors.background}
-foreground = ${colors.foreground}
-
-line-size = 3
-line-color = #f00
-
-border-size = 4
-border-color = #00000000
-
-padding-left = 0
-padding-right = 1
-
-module-margin-left = 1
-module-margin-right = 1
-
-font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
-font-3 = Hack Nerd Font Mono:pixelsize=14;2
-
-modules-left = bspwm 
-modules-center = mpd xwindow 
-modules-right = pub-ip network ethernet wlan0  vpn battery xbacklight
-
-tray-position = right
-tray-padding = 1
-
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:20:...%
 #label = %title%
-#label-maxlen = 50
+label-maxlen = 50
 format = <label>
-format-background = #000
+#format-background = #000
 format-foreground = #C0C0C0
-format-padding = 4
-
+format-padding = 2
 label-empty = Nope
 label-empty-foreground = #707880
 
 [module/xkeyboard]
 type = internal/xkeyboard
-blacklist-0 = 
-#num lock
+blacklist-0 = num lock
 
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-#format-prefix-underline = ${colors.secondary}
+format-prefix-underline = ${colors.secondary}
 
 label-layout = %layout%
-#label-layout-underline = ${colors.secondary}
+label-layout-underline = ${colors.secondary}
 
 label-indicator-padding = 2
 label-indicator-margin = 1
 label-indicator-background = ${colors.secondary}
-#label-indicator-underline = ${colors.secondary}
+label-indicator-underline = ${colors.secondary}
 
 [module/filesystem]
 type = internal/fs
@@ -150,14 +112,14 @@ interval = 25
 
 mount-0 = /
 #mount-1 = /media/
-
 label-mounted = %{}%mountpoint%%{F-}  %percentage_free%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
+
+
 [module/bspwm]
 type = internal/bspwm
-
 pin-workspaces = true
 
 label-focused = 
@@ -174,7 +136,6 @@ label-urgent-padding = 2
 label-empty = 
 label-empty-foreground = ${colors.foreground-alt}
 label-empty-padding = 2
-
 
 ; Separator in between workspaces
 ; label-separator = |
@@ -216,55 +177,6 @@ label-urgent-padding = 2
 ; Separator in between workspaces
 ; label-separator = |
 
-[module/mpd]
-type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
-
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
-
-label-song-maxlen = 25
-label-song-ellipsis = true
-
-
-
-
-#[module/xbacklight]
-#type = internal/xbacklight
-#format = <label> <bar>
-#label = BL
-
-#bar-width = 10
-#bar-indicator = |
-#bar-indicator-foreground = #fff
-#bar-indicator-font = 2
-#bar-fill = ─
-#bar-fill-font = 2
-#bar-fill-foreground = #9f78e1
-#bar-empty = ─
-#bar-empty-font = 2
-#bar-empty-foreground = ${colors.foreground-alt}
-
-
-[module/file-progress]
-type = custom/script
-interval = 1
-exec = "/home/snifer/.config/polybar/file-progress"
-label = %output%
-
-[module/kdeconnect]  
-type = custom/script  
-exec = "/home/snifer/.config/polybar/polybar-kdeconnect.sh -d"  
-tail = true
-
-[module/memory]
-type = internal/memory
-format-prefix = " "
-label         = %gb_used%
-
 [module/xbacklight]
 ;https://github.com/jaagr/polybar/wiki/Module:-xbacklight
 type = internal/xbacklight
@@ -299,60 +211,13 @@ type = internal/cpu
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #f90000
+#format-underline = #f90000
 label = %percentage:2%%
 
-#[module/memory]
-#type = internal/memory
-#interval = 2
-#format-prefix = " "
-#format-prefix-foreground = ${colors.foreground-alt}
-#format-underline = #4bffdc
-#label = %percentage_used%%
-
-#[module/wlan]
-#type = internal/network
-#interface = wlp2s0
-#interval = 3.0
-[module/networkspeedup]
-;https://github.com/jaagr/polybar/wiki/Module:-network
-type = internal/network
-;interface = wlp2s0
-;interface = enp3s0
-interface = wlp2s0
-label-connected = "%upspeed:7%"
-format-connected = <label-connected>
-format-connected-prefix = " "
-format-connected-prefix-foreground = #fefefe
-format-connected-foreground = #fefefe
-#format-connected-background = #A77AC4
- 
-[module/networkspeeddown]
-;https://github.com/jaagr/polybar/wiki/Module:-network
-type = internal/network
-;interface = wlp2s0
-;interface = enp3s0
-interface = wlp2s0
-label-connected = "%downspeed:7%"
-format-connected = <label-connected>
-format-connected-prefix = "  "
-format-connected-prefix-foreground = #fefefe
-format-connected-foreground = #fefefe
-#format-connected-background = #A77AC4
-
-[module/pub-ip]
-#;https://linuxconfig.org/polybar-a-better-wm-panel-for-your-linux-system
-type = custom/script
-exec = ~/.config/bin/pub-ip.sh
-interval = 100
-format-foreground = ${colors.foreground}
-format-background = ${colors.background}
-#format-underline = #FFBB00
-label = %output%
-format-prefix = "  "
-format-prefix-foreground = #FFBB00
-
-
+[module/memory]
+type = internal/memory
+format-prefix = " "
+label         = %gb_used%
 
 [module/ethernet]
 type = custom/script
@@ -369,17 +234,22 @@ type = custom/script
 interval = 2
 exec = /home/snifer/.config/bin/vpn.sh
 
+[module/pub-ip]
+#;https://linuxconfig.org/polybar-a-better-wm-panel-for-your-linux-system
+type = custom/script
+exec = ~/.config/bin/pub-ip.sh
+interval = 100
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+label = %output%
+format-prefix = "  "
+format-prefix-foreground = #FFBB00
+
 [module/calendar]
 type = custom/script
 exec = /home/snifer/.config/bin/calendar.sh
 interval = 5
 click-left = /home/snifer/.config/bin/calendar.sh --popup &
-
-
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
-label-connected = %essid%
-
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
@@ -396,7 +266,7 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
 type = internal/network
-interface = vmnet8
+interface = ztyou7mv5e
 interval = 3.0
 
 format-connected-underline = #55aa55
@@ -428,12 +298,10 @@ label = %date% %time%
 
 [module/pulseaudio]
 type = internal/pulseaudio
-
 format-volume = <label-volume> <bar-volume>
-label-volume = 墳 %percentage%%
+label-volume =  %percentage%%
 label-volume-foreground = ${root.foreground}
-
-label-muted =  muted
+label-muted =  no puedo hablar
 label-muted-foreground = #666
 
 bar-volume-width = 10
@@ -495,7 +363,7 @@ format-discharging-underline = ${self.format-charging-underline}
 
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground-alt}
-#format-full-underline = ${self.format-charging-underline}
+format-full-underline = ${self.format-charging-underline}
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -533,21 +401,10 @@ ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground-alt}
 
-#[module/vpn]
-#type = custom/script
-#interval = 2
-#exec = /home/snifer/.config/bin/vpn.sh
-
-
-
-
 [module/powermenu]
 type = custom/menu
-
 expand-right = true
-#nm-applet &
 format-spacing = 1
-
 label-open = 
 label-open-foreground = ${colors.secondary}
 label-close =  cancel
@@ -569,6 +426,8 @@ menu-2-0 = power off
 menu-2-0-exec = sudo poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
+
+
 
 [settings]
 screenchange-reload = true
