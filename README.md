@@ -3,9 +3,9 @@
 Ficheros de configuración para los tiling managers que manejo regularmente. 
 
 # Programas a instalar
-- Alacritty
-- keypassxc
-- i3lock-fancy
+Alacritty
+keypassxc
+i3lock-fancy
 
 
 - [config](https://github.com/Snifer/TilingManagerdotfiles/blob/master/config) Keymap configuración.
